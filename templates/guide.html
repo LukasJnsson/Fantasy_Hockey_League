@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <title>FHL guide</title>
+    <link rel="icon" href="/static/FHL.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
+    
+</head>
+<body>
+    <nav>
+        <div class="left_nav">
+            <div id="log">
+                <a href="/">
+                    <img src="{{url_for('static', filename = 'FHL.png')}}" alt="Logga" href="index.html">
+                </a>
+            </div>
+            <div id="menu">
+                <div id="mobile_menu">
+                    <button class="dropbtn mobile" onclick="dropFunction_mobile()">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </button>
+                    <div class="dropdown_mobile" id="mobile_content">
+                        <div class="dropdown">
+                            <button class="dropbtn" onclick="dropFunction_players()">Hockeyspelare</button>
+                        
+                            <div class="dropdown_content" id="hockey_players">
+                                <a href="/top-spelare">Statistik över spelare</a>
+                                <a href="/köp-spelare">Köpa spelare</a>
+                                <a href="/mina-spelare">Mina spelare</a>
+                            </div>
+                        </div>
+                        <div class="dropdown">
+                            <button class="dropbtn" onclick="dropFunction_matches()">Matcher</button>
+                        
+                            <div class="dropdown_content" id="matches">
+                                <a href="/match">Skapa lag</a>
+                                <a href="/spela-match">Spela Match</a>
+                                <a href="/match-historik">Min Matchhistorik</a>
+                            </div>
+                        </div>
+                        <div class="dropdown">
+                            <button class="dropbtn" onclick="dropFunction_posts()">Inlägg</button>
+                        
+                            <div class="dropdown_content" id="posts">
+                                <a href="/forum">Forum</a>
+                                <a href="/inlägg">Skapa Inlägg</a>
+                                <a href="/forum/mina/inlägg">Mina Inlägg</a>
+                            </div>
+                        </div>
+                        <div id="help">
+                            <button id="light_blue" class="help">Hjälp 
+                                <a href="/guide"></a>
+                                <div id="questionmark">
+                                    <p> ?</p>
+                                </div>
+                            </button> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+        <div id="nav_right">
+            <div class="points">
+               <p>{{points}} P</p>  <!--Från databasen skrivs användarens poäng ut-->
+            </div>
+            <div class="log_out">
+
+                <a href="/logout">Logga ut</a>
+            </div>
+        </div>
+    </nav>
+    
+    <div id="guide_body">
+        <h2>Guide</h2>
+        <article  class="foldable">
+            <header>
+                <h3>Guide för köp av spelare</h3>
+                <p> <i class="arrow down"></i></p>
+            </header>
+            <div>
+                <p>Guide för köp av spelare step by step:</p>
+                    <p>1.	Börja med att gå till ”Hockeyspelare” där du sedan väljer ”Köpa spelare”</p>
+                    <p>2.	Alla startar med 100 poäng som kan användas för köp av spelare. Dessa poäng ska räcka för en uppställning (6 spelare) eller enskilda spelare om så önskas.</p>
+                    <p>3.	Du börjar med att köpa en spelare för varje position. OBS! Lagets totala kostnad får inte överskrida din totala poäng vid köp av spelare.</p>
+                    <p>4.	Vid klick på ”köp” knappen köps spelare och placeras under ”mina spelare”</p>
+                    
+            </div>
+        </article>
+        <article  class="foldable">
+            <header>
+                <h3>Guide för att skapa lag</h3>
+                <p><i class="arrow down"></i></p>
+            </header>
+            <div>
+                <p>Guide för hur man skapar ett lag:</p> 
+                    <p>1.	OBS! Denna guide fungerar enbart om du köpt minst 1 spelare per position! Om detta inte är gjort hänvisar vi dig till föregående guide!</p> 
+                    <p>2.	Börja med att gå till ”matcher” där du sedan väljer alternativet ”Lägg match” (om du redan skapat ditt lag så hoppa till guide för att spela match).</p> 
+                    <p>3.	Där inne kommer du att finna olika positioner som måste ifyllas med dina köpta spelare.</p> 
+                    <p>4.	Välj spelare för den valda positionen genom dropdown menyn.</p> 
+                    <p>5.	När alla positioner är fylld med valda spelare måste laget döpas till valfritt namn och sedan trycker man på ”skicka”. Snyggt! Ditt lag är skapat!</p>    
+            </div>
+        </article>
+        <article  class="foldable">
+            <header>
+                <h3>Guide för att spela match</h3>
+                <p><i class="arrow down"></i></p>
+            </header>
+            <div>
+                <p>Guide för hur man spelar en match:</p> 
+                    <p>1.	OBS! Denna guide fungerar enbart om man redan skapat ett lag! Om detta inte är gjort hänvisar vi till guide för hur man skapar lag!</p>
+                    <p>2.	När laget är skapat och du vill utmana en annan användare navigerar du dig till ”matcher” och väljer alternativet ”spela match”</p> 
+                    <p>3.	Du väljer sitt lag i dropdown menyn under ”välj ditt lag” därefter väljer man motståndare under ”välj vem du vill möta.” OBS! Du kan inte välja ett lag som du skapat samma dag.</p> 
+                    <p>4.	Klicka på ”skicka” och din match är nu lagd.</p> 
+                
+            </div>
+        </article>
+        <article  class="foldable">
+            <header>
+                <h3>Guide för forumet</h3>
+                <p> <i class="arrow down"></i></p>
+            </header>
+            <div>
+                <p>Guide för forum:</p>
+                    <p>1.	Du navigerar sig till ”Inlägg”</p>
+                    <p>2.	Under alternativet ”Forum” kan du se alla gjorda inlägg.</p>
+                <p>Hur man skapar inlägg:</p>
+                    <p>1.	Du väljer ”skapa inlägg” under ”inlägg”</p>
+                    <p>2.	Här fyller du i ”Titel” väljer vilken kategori inlägget ska kategoriseras under, samt fyller i text relaterat till ditt ämne.</p>
+                <p>Se dina inlägg:</p>
+                    <p>1.	Du navigerar sig till ”Mina inlägg” under ”inlägg”</p>
+                    <p>2.	Här presenteras alla skapta inlägg som du har skapat.</p>
+            </div>
+        </article>
+    </div>
+    
+    <footer>
+        <div id="log">
+            <a href="/">
+                <img src="{{url_for('static', filename = 'FHL.png')}}" alt="Logga" >
+            </a>
+        </div>
+        <p>Copyright© by FHL</p>
+    </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script src="{{url_for('static', filename = 'script.js')}}"></script>
+</body>
+
+</html>

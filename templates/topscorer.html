@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <title>FHL hockeyspelare</title>
+    <link rel="icon" href="/static/FHL.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
+</head>
+
+<body>
+    <nav>
+        <div class="left_nav">
+            <div id="log">
+                <a href="/">
+                    <img src="{{url_for('static', filename = 'FHL.png')}}" alt="Logga" href="index.html">
+                </a>
+            </div>
+            <div id="menu">
+                <div id="mobile_menu">
+                    <button class="dropbtn mobile" onclick="dropFunction_mobile()">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </button>
+                    <div class="dropdown_mobile" id="mobile_content">
+                        <div class="dropdown">
+                            <button id="light_blue" class="dropbtn" onclick="dropFunction_players()">Hockeyspelare</button>
+                        
+                            <div class="dropdown_content" id="hockey_players">
+                                <a href="/top-spelare">Statistik över spelare</a>
+                                <a href="/köp-spelare">Köpa spelare</a>
+                                <a href="/mina-spelare">Mina spelare</a>
+                            </div>
+                        </div>
+                        <div class="dropdown">
+                            <button class="dropbtn" onclick="dropFunction_matches()">Matcher</button>
+                        
+                            <div class="dropdown_content" id="matches">
+                                <a href="/match">Skapa lag</a>
+                                <a href="/spela-match">Spela Match</a>
+                                <a href="/match-historik">Min Matchhistorik</a>
+                            </div>
+                        </div>
+                        <div class="dropdown">
+                            <button class="dropbtn" onclick="dropFunction_posts()">Inlägg</button>
+                        
+                            <div class="dropdown_content" id="posts">
+                                <a href="/forum">Forum</a>
+                                <a href="/inlägg">Skapa Inlägg</a>
+                                <a href="/forum/mina/inlägg">Mina Inlägg</a>
+                            </div>
+                        </div>
+                        <div id="help">
+                            <button class="help">Hjälp 
+                                <a href="/guide"></a>
+                                <div id="questionmark">
+                                    <p> ?</p>
+                                </div>
+                            </button> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+        <div id="nav_right">
+            <div class="points">
+               <p>{{points}} P</p>  <!--Från databasen skrivs användarens poäng ut-->
+            </div>
+            <div class="log_out">
+
+                <a href="/logout">Logga ut</a>
+            </div>
+        </div>
+    </nav>
+    
+    
+    <div id="topscorer_body">
+        <!--Header for Topscorer-->
+        <h2>Topplista</h2>
+
+        <!--Top Scorer - Points-->    
+        <div class="content"> 
+            
+            <!--Score title-->
+            <h3 class="topscorer_title">Poäng</h3>
+
+            <div class="slide_show">
+                <div class="one_time">
+                
+                    {%for player in top_players%}   
+                        <!--Player-->
+                        <div class="card">
+                            <div class="card__inner">
+                                <div class="card__face card__face--front">
+                                    
+                                    <!--Player statistics-->
+                                    <img src="{{player.image}}">
+                                    <!--Hämta namn från databas-->
+                                    <h4>{{player.name}}</h4>
+                                    <!--Hämta poäng från databas ("Poäng: " + database value)-->
+                                    <h4>Poäng: {{player.price}}</h4>
+                                </div>
+                                {% if player.position == "Goalie" %}
+                                <div class="card__face card__face--back">
+                                    <div class="card__content">
+                                        <div class="card__header">
+                                            <!--Spelarstatistik från databasen-->
+                                            <!--Hämta namn-->
+                                            <h4>{{player.name}}</h4>
+                                            <!--Hämta lag-->
+                                            <p>Lag:</p>
+                                            <p class="line"> {{player.team}}</p>
+                                            <!--Hämta position-->
+                                            <p>Position:</p>
+                                            <p class="line"> {{player.position}}</p>
+                                            <!--Hämta antal räddningar-->
+                                            <p>Räddningar:</p>
+                                            <p class="line"> {{player.saves}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% else %}
+                                <div class="card__face card__face--back">
+                                    <div class="card__content">
+                                        <div class="card__header">
+                                            <!--Spelarstatistik från databasen-->
+                                            <!--Hämta namn-->
+                                            <h4>{{player.name}}</h4>
+                                            <!--Hämta lag-->
+                                            <p>Lag:</p>
+                                            <p class="line"> {{player.team}}</p>
+                                            <!--Hämta position-->
+                                            <p>Position:</p>
+                                            <p class="line"> {{player.position}}</p>
+                                            <!--Hämta antal mål-->
+                                            <p>Mål:</p>
+                                            <p class="line">{{player.goal}}</p>
+                                            <!--Hämta antal assit-->
+                                            <p>Assist:</p>
+                                            <p class="line">{{player.assists}}</p>
+                                            <!--Hämta antal utvisningsminuter-->
+                                            <p>Utvisningsminuter:</p>
+                                            <p class="line">{{player.penalty_time}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {%endfor%}
+                </div>
+            </div>
+        </div>       
+
+
+        <!--Top Scorer - Goals-->  
+        <div class="content">
+
+                <!--Score title-->
+            <h3 class="topscorer_title">Mål</h3>
+
+            <div class="slide_show">
+                <div class="one_time">
+
+                    {%for player in most_goals%}   
+                        <!--Player-->
+                        <div class="card">
+                            <div class="card__inner">
+                                <div class="card__face card__face--front">
+                                    
+                                    <!--Player statistics-->
+                                    <img src="{{player.image}}">
+                                    <!--Hämta namn från databas-->
+                                    <h4>{{player.name}}</h4>
+                                    <!--Hämta poäng från databas ("Poäng: " + database value)-->
+                                    <h4>Mål: {{player.goal}}</h4>
+                                </div>
+
+                                <div class="card__face card__face--back">
+                                    <div class="card__content">
+                                        <div class="card__header">
+                                            <!--Spelarstatistik från databasen-->
+                                            <!--Hämta namn-->
+                                            <h4>{{player.name}}</h4>
+                                            <!--Hämta lag-->
+                                            <p>Lag:</p>
+                                            <p class="line"> {{player.team}}</p>
+                                            <!--Hämta position-->
+                                            <p>Position:</p>
+                                            <p class="line"> {{player.position}}</p>
+                                            <!--Hämta antal mål-->
+                                            <p>Mål:</p>
+                                            <p class="line">{{player.goal}}</p>
+                                            <!--Hämta antal assit-->
+                                            <p>Assist:</p>
+                                            <p class="line">{{player.assists}}</p>
+                                            <!--Hämta antal utvisningsminuter-->
+                                            <p>Utvisningsminuter:</p>
+                                            <p class="line">{{player.penalty_time}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {%endfor%}
+                </div>
+            </div>
+        </div> 
+
+
+        <!--Top Scorer - Assists-->  
+        <div class="content">
+
+            <!--Score title-->
+            <h3 class="topscorer_title">Assist</h3>
+
+            <div class="slide_show">
+                <div class="one_time">
+
+                    {%for player in most_assists%}   
+                        <!--Player-->
+                        <div class="card">
+                            <div class="card__inner">
+                                <div class="card__face card__face--front">
+                                    
+                                    <!--Player statistics-->
+                                    <img src="{{player.image}}">
+                                    <!--Hämta namn från databas-->
+                                    <h4>{{player.name}}</h4>
+                                    <!--Hämta poäng från databas ("Poäng: " + database value)-->
+                                    <h4>Assist: {{player.assists}}</h4>
+                                </div>
+
+                                <div class="card__face card__face--back">
+                                    <div class="card__content">
+                                        <div class="card__header">
+                                            <!--Spelarstatistik från databasen-->
+                                            <!--Hämta namn-->
+                                            <h4>{{player.name}}</h4>
+                                            <!--Hämta lag-->
+                                            <p>Lag:</p>
+                                            <p class="line"> {{player.team}}</p>
+                                            <!--Hämta position-->
+                                            <p>Position:</p>
+                                            <p class="line"> {{player.position}}</p>
+                                            <!--Hämta antal mål-->
+                                            <p>Mål:</p>
+                                            <p class="line">{{player.goal}}</p>
+                                            <!--Hämta antal assit-->
+                                            <p>Assist:</p>
+                                            <p class="line">{{player.assists}}</p>
+                                            <!--Hämta antal utvisningsminuter-->
+                                            <p>Utvisningsminuter:</p>
+                                            <p class="line">{{player.penalty_time}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {%endfor%}
+                </div>
+            </div> 
+        </div>
+        <div class="content"> 
+            
+            <!--Score title-->
+            <h3 class="topscorer_title">Räddningar</h3>
+
+            <div class="slide_show">
+                <div class="one_time">
+                
+                    {%for player in most_saves%}   
+                        <!--Player-->
+                        <div class="card">
+                            <div class="card__inner">
+                                <div class="card__face card__face--front">
+                                    
+                                    <!--Player statistics-->
+                                    <img src="{{player.image}}">
+                                    <!--Hämta namn från databas-->
+                                    <h4>{{player.name}}</h4>
+                                    <!--Hämta poäng från databas ("Poäng: " + database value)-->
+                                    <h4>Räddningar: {{player.saves}}</h4>
+                                </div>
+
+                                <div class="card__face card__face--back">
+                                    <div class="card__content">
+                                        <div class="card__header">
+                                            <!--Spelarstatistik från databasen-->
+                                            <!--Hämta namn-->
+                                            <h4>{{player.name}}</h4>
+                                            <!--Hämta lag-->
+                                            <p>Lag:</p>
+                                            <p class="line"> {{player.team}}</p>
+                                            <!--Hämta position-->
+                                            <p>Position:</p>
+                                            <p class="line"> {{player.position}}</p>
+                                            <!--Hämta antal räddningar-->
+                                            <p>Räddningar:</p>
+                                            <p class="line"> {{player.saves}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {%endfor%}
+                </div>
+            </div>
+        </div>  
+    
+    </div>
+
+    <footer>
+        <div id="log">
+            <a href="/">
+                <img src="{{url_for('static', filename = 'FHL.png')}}" alt="Logga" >
+            </a>
+        </div>
+        <p>Copyright© by FHL</p>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script src="{{url_for('static', filename = 'script.js')}}"></script>
+
+</body>
+</html>
